@@ -4,15 +4,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useActionState } from "react";
-import { formSignin } from "@/actions/auth";
+import { useActionState, useState } from "react";
+import { formSignup } from "@/actions/auth";
 
-export default function SignInForm() {
-  const [state, action, pending] = useActionState(formSignin, undefined);
+export default function SignUpForm() {
+  const [state, action, pending] = useActionState(formSignup, undefined);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <form action={action}>
       <div className="grid gap-6">
+        <div className="grid gap-2">
+          <Label htmlFor="name">Name</Label>
+          <Input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="john"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {state?.errors?.name && (
+            <p className="text-red-500 text-xs">{state.errors.name}</p>
+          )}
+        </div>
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -20,6 +37,8 @@ export default function SignInForm() {
             type="email"
             name="email"
             placeholder="m@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {state?.errors?.email && (
             <p className="text-red-500 text-xs">{state.errors.email}</p>
@@ -35,7 +54,12 @@ export default function SignInForm() {
               Forgot your password?
             </Link>
           </div>
-          <Input id="password" name="password" type="password" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="********"
+          />
           {state?.errors?.password && (
             <div>
               <p>Password must:</p>
@@ -49,8 +73,20 @@ export default function SignInForm() {
             </div>
           )}
         </div>
+        <div className="grid gap-2">
+          <Label htmlFor="rePassword">Re-password</Label>
+          <Input
+            id="rePassword"
+            type="password"
+            name="rePassword"
+            placeholder="********"
+          />
+          {state?.errors?.rePassword && (
+            <p className="text-red-500 text-xs">{state.errors.rePassword}</p>
+          )}
+        </div>
         <Button type="submit" className="w-full" disabled={pending}>
-          Login
+          Sign up
         </Button>
         {state?.message && (
           <p className="text-red-500 text-xs">{state.message}</p>

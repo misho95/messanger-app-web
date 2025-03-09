@@ -64,8 +64,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return null;
           }
 
-          // const isPasswordMatch = compareSync(User?.password || "", password);
-          const isPasswordMatch = User?.password === password;
+          const isPasswordMatch = compareSync(password, User?.password || "");
 
           if (!isPasswordMatch) {
             return null;

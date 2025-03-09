@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { SignInContainer } from "@/components/auth/sign-in-container";
+import { SignUpContainer } from "@/components/auth/sing-up-container";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -11,7 +11,7 @@ export default async function Page() {
 
   return (
     <div className="flex justify-center items-center h-full">
-      <SignInContainer />
+      <SignUpContainer />
     </div>
   );
 }
